@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------------- Endpoints ----------------
+# ------- Endpoints -------
 
 @app.get("/tasks", response_model=List[schemas.TaskOut])
 def get_tasks(db: Session = Depends(get_db)):
