@@ -1,6 +1,5 @@
 import { useTasks } from "../context/TaskContext";
 import { FileDown, BarChart3 } from "lucide-react";
-import PdfButton from "../components/PdfButton";
 
 export default function ReportsPage() {
   const { tasks } = useTasks();
@@ -9,13 +8,14 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold text-slate-800">
+      <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
         Laporan Aktivitas
       </h1>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Progress */}
         <div className="p-6 bg-white rounded-xl shadow-md border border-slate-100">
-          <BarChart3 size={28} className="text-teal-500 mb-2" />
+          <BarChart3 size={28} className="text-teal-500 mb-3" />
           <p className="text-slate-500 text-sm">Progress Pekerjaan</p>
           <div className="w-full bg-slate-200 rounded-full h-4 mt-3">
             <div
@@ -28,17 +28,24 @@ export default function ReportsPage() {
           </p>
         </div>
 
-        <div className="p-6 bg-white rounded-xl shadow-md border border-slate-100 flex flex-col justify-between">
+        {/* Download */}
+        <div className="p-6 bg-white rounded-xl shadow-md border border-slate-100 flex flex-col gap-4">
           <div>
-            <FileDown size={28} className="text-teal-500 mb-3" />
-            <h3 className="text-lg font-semibold mb-2">
-              Unduh Laporan Tugas
-            </h3>
+            <FileDown size={28} className="text-teal-500 mb-2" />
+            <h3 className="text-lg font-semibold mb-1">Unduh Laporan</h3>
             <p className="text-slate-500 text-sm mb-4">
-              Dapatkan laporan semua tugas dalam bentuk file PDF.
+              Dapatkan laporan semua tugas dalam format PDF.
             </p>
           </div>
-          <PdfButton />
+
+          {/* Tombol di bawah teks */}
+          <button
+            className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 
+            text-white font-medium px-4 py-2 rounded-lg shadow-md text-sm transition-all w-max"
+          >
+            <FileDown size={16} />
+            Download Report
+          </button>
         </div>
       </div>
     </div>

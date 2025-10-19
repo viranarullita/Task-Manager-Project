@@ -29,7 +29,7 @@ export default function PdfButton() {
   return (
     <button
       onClick={generatePDF}
-      className="flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 py-2 rounded-lg shadow-sm font-medium transition-transform duration-300 hover:scale-105"
+      className="w-full sm:w-auto flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 py-2 rounded-lg font-medium shadow-sm transition-transform duration-300 hover:scale-105"
     >
       <Download size={18} />
       Download Report

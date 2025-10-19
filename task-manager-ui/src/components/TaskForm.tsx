@@ -6,10 +6,7 @@ export default function TaskForm() {
   const { addTask } = useTasks();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [message, setMessage] = useState<{
-    text: string;
-    type: "error" | "success" | "";
-  }>({
+  const [message, setMessage] = useState<{ text: string; type: "error" | "success" | "" }>({
     text: "",
     type: "",
   });
@@ -28,16 +25,15 @@ export default function TaskForm() {
       setDescription("");
       setTimeout(() => setMessage({ text: "", type: "" }), 2000);
     } catch {
-      setMessage({ text: "Gagal menyimpan tugas. Coba lagi.", type: "error" });
+      setMessage({ text: "Gagal menyimpan tugas.", type: "error" });
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid gap-5 bg-gradient-to-b from-white to-slate-50 rounded-xl p-5 md:p-6 transition-all duration-300"
+      className="grid gap-5 bg-gradient-to-b from-white to-slate-50 rounded-xl p-4 sm:p-6 md:p-8 transition-all duration-300"
     >
-      {/* Pesan Notifikasi */}
       {message.text && (
         <div
           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
@@ -46,39 +42,29 @@ export default function TaskForm() {
               : "bg-emerald-100 text-emerald-700 border border-emerald-300"
           }`}
         >
-          {message.type === "error" ? (
-            <XCircle size={18} />
-          ) : (
-            <CheckCircle2 size={18} />
-          )}
+          {message.type === "error" ? <XCircle size={18} /> : <CheckCircle2 size={18} />}
           {message.text}
         </div>
       )}
 
-      {/* Input Judul */}
       <div>
-        <label className="block font-medium mb-2 text-slate-700 text-sm">
+        <label className="block font-medium mb-2 text-slate-700 text-sm md:text-base">
           Judul Tugas <span className="text-rose-500">*</span>
         </label>
         <input
-          className={`w-full border ${
-            message.type === "error" && !title.trim()
-              ? "border-rose-400 focus:ring-rose-300"
-              : "border-slate-300 focus:ring-teal-400"
-          } bg-white/90 p-2.5 rounded-lg focus:ring-2 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400`}
+          className="w-full border border-slate-300 bg-white p-2.5 md:p-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400"
           placeholder="Masukkan nama tugas..."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
-      {/* Input Deskripsi */}
       <div>
-        <label className="block font-medium mb-2 text-slate-700 text-sm">
+        <label className="block font-medium mb-2 text-slate-700 text-sm md:text-base">
           Deskripsi
         </label>
         <textarea
-          className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400 resize-y min-h-[100px] max-h-[250px] overflow-auto break-words"
+          className="w-full border border-slate-300 p-2.5 md:p-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400 resize-y min-h-[100px] max-h-[250px]"
           placeholder="Deskripsi (opsional)..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -87,7 +73,7 @@ export default function TaskForm() {
 
       <button
         type="submit"
-        className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-300 w-fit"
+        className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 md:px-6 py-2.5 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-300 w-full sm:w-auto"
       >
         <Save size={18} />
         Simpan Tugas
