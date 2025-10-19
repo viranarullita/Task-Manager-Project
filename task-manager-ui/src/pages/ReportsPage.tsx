@@ -38,7 +38,6 @@ export default function ReportsPage() {
             </p>
           </div>
 
-          {/* Tombol di bawah teks */}
           <button
             className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 
             text-white font-medium px-4 py-2 rounded-lg shadow-md text-sm transition-all w-max"

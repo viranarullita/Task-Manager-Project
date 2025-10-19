@@ -8,7 +8,6 @@ export default function Home() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 px-3 sm:px-4 md:px-6 lg:px-10 transition-all duration-300">
-      {/* Header */}
       <header className="flex flex-col items-start gap-3">
         <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
           Manajemen Tugas
@@ -26,14 +25,12 @@ export default function Home() {
         </button>
       </header>
 
-      {/* Form */}
       {showForm && (
         <div className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 md:p-7 border border-slate-100 transition-all duration-300">
           <TaskForm />
         </div>
       )}
 
-      {/* Daftar Tugas */}
       <div className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 md:p-7 border border-slate-100 transition-all duration-300">
         <h2 className="text-lg md:text-xl font-semibold text-slate-700 mb-4 md:mb-6">
           Daftar Tugas
