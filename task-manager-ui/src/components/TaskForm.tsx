@@ -1,0 +1,97 @@
+import { useState } from "react";
+import { useTasks } from "../context/TaskContext";
+import { Save, CheckCircle2, XCircle } from "lucide-react";
+
+export default function TaskForm() {
+  const { addTask } = useTasks();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [message, setMessage] = useState<{
+    text: string;
+    type: "error" | "success" | "";
+  }>({
+    text: "",
+    type: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title.trim()) {
+      setMessage({ text: "Judul tugas wajib diisi!", type: "error" });
+      return;
+    }
+
+    try {
+      await addTask(title, description);
+      setMessage({ text: "Tugas berhasil disimpan!", type: "success" });
+      setTitle("");
+      setDescription("");
+      setTimeout(() => setMessage({ text: "", type: "" }), 2000);
+    } catch {
+      setMessage({ text: "Gagal menyimpan tugas. Coba lagi.", type: "error" });
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="grid gap-5 bg-gradient-to-b from-white to-slate-50 rounded-xl p-5 md:p-6 transition-all duration-300"
+    >
+      {/* Pesan Notifikasi */}
+      {message.text && (
+        <div
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+            message.type === "error"
+              ? "bg-rose-100 text-rose-700 border border-rose-300"
+              : "bg-emerald-100 text-emerald-700 border border-emerald-300"
+          }`}
+        >
+          {message.type === "error" ? (
+            <XCircle size={18} />
+          ) : (
+            <CheckCircle2 size={18} />
+          )}
+          {message.text}
+        </div>
+      )}
+
+      {/* Input Judul */}
+      <div>
+        <label className="block font-medium mb-2 text-slate-700 text-sm">
+          Judul Tugas <span className="text-rose-500">*</span>
+        </label>
+        <input
+          className={`w-full border ${
+            message.type === "error" && !title.trim()
+              ? "border-rose-400 focus:ring-rose-300"
+              : "border-slate-300 focus:ring-teal-400"
+          } bg-white/90 p-2.5 rounded-lg focus:ring-2 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400`}
+          placeholder="Masukkan nama tugas..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+
+      {/* Input Deskripsi */}
+      <div>
+        <label className="block font-medium mb-2 text-slate-700 text-sm">
+          Deskripsi
+        </label>
+        <textarea
+          className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400 resize-y min-h-[100px] max-h-[250px] overflow-auto break-words"
+          placeholder="Deskripsi (opsional)..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-300 w-fit"
+      >
+        <Save size={18} />
+        Simpan Tugas
+      </button>
+    </form>
+  );
+}
