@@ -6,12 +6,10 @@ import models
 import schemas
 from database import SessionLocal, engine, get_db, Base
 
-# Buat tabel jika belum ada
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# CORS supaya React bisa fetch
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],  

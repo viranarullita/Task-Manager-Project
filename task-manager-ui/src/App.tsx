@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import DashboardPage from "./pages/DashboardPage";
-import Home from "./pages/Home"; // halaman Tasks
+import Home from "./pages/Home"; 
 import ReportsPage from "./pages/ReportsPage";
 
 export default function App() {
@@ -45,7 +45,6 @@ export default function App() {
               </NavLink>
             </nav>
 
-            {/* Footer Copyright */}
             <footer className="mt-auto border-t border-slate-700 pt-5 text-center text-slate-400 text-sm select-none">
               © {new Date().getFullYear()} Vira Narullita. All rights reserved.
             </footer>
