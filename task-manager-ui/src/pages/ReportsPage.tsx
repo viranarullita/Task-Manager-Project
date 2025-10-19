@@ -12,9 +12,6 @@ export default function ReportsPage() {
       <h1 className="text-3xl font-bold text-slate-800">
         Laporan Aktivitas
       </h1>
-      <p className="text-slate-500 text-sm">
-        Ringkasan laporan pekerjaan minggu ini
-      </p>
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="p-6 bg-white rounded-xl shadow-md border border-slate-100">
