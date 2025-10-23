@@ -34,6 +34,16 @@ export default function TaskForm() {
       return;
     }
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+
+    if (start < today) {
+      setMessage({ text: "Tanggal mulai tidak boleh sebelum hari ini!", type: "error" });
+      return;
+    }
+
     if (new Date(endDate) < new Date(startDate)) {
       setMessage({ text: "Tanggal selesai tidak boleh sebelum tanggal mulai!", type: "error" });
       return;

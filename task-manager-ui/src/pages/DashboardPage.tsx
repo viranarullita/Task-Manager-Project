@@ -86,29 +86,46 @@ export default function DashboardPage(): React.ReactElement {
                     : "bg-slate-50 hover:bg-slate-100 border-slate-200"
                 }`}
               >
-                <p className={`font-semibold text-lg ${t.completed ? "text-slate-500 line-through" : "text-slate-800"}`}>
+                <p
+                  className={`font-semibold text-lg ${
+                    t.completed ? "text-slate-500 line-through" : "text-slate-800"
+                  }`}
+                >
                   {t.title}
                 </p>
 
                 {t.start_date && t.end_date && duration !== null && (
-                  <p className="text-sm text-sky-600 flex items-center gap-1 mt-1">
-                    <Timer size={15} /> Durasi pengerjaan: {duration} hari
-                  </p>
+                  <div className="flex items-center gap-2 mt-1 text-sm text-sky-600">
+                    <Timer size={15} />
+                    <span>Durasi pengerjaan:</span>
+                    <span className="font-medium text-slate-700">{duration} hari</span>
+                  </div>
                 )}
 
                 {!t.completed && t.end_date && timeLeft && (
-                  <p className={`text-sm flex items-center gap-1 mt-1 ${timeLeft.color}`}>
-                    <Calendar size={15} /> Deadline: {formatDate(t.end_date)} ({timeLeft.text})
-                  </p>
+                  <div className={`flex items-start sm:items-center gap-2 mt-1.5 text-sm ${timeLeft.color}`}>
+                    <Calendar size={15} className="mt-[2px]" />
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1">
+                      <span className="font-medium text-slate-700">Deadline:</span>
+                      <span>{formatDate(t.end_date)}</span>
+                      <span className="text-xs sm:text-sm opacity-90">({timeLeft.text})</span>
+                    </div>
+                  </div>
                 )}
 
                 {t.completed && t.end_date && (
-                  <p className="text-sm flex items-center gap-1 mt-1 text-emerald-600">
-                    <Calendar size={15} /> Selesai pada: {formatDate(t.end_date)}
-                  </p>
+                  <div className="flex items-start sm:items-center gap-2 mt-1.5 text-sm text-emerald-600">
+                    <Calendar size={15} className="mt-[2px]" />
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1">
+                      <span className="font-medium text-slate-700">Selesai pada:</span>
+                      <span>{formatDate(t.end_date)}</span>
+                    </div>
+                  </div>
                 )}
 
-                {t.description && <p className="text-slate-500 text-sm mt-1 line-clamp-2">{t.description}</p>}
+                {t.description && (
+                  <p className="text-slate-500 text-sm mt-2 line-clamp-2">{t.description}</p>
+                )}
               </div>
             );
           })
