@@ -7,3 +7,8 @@ CREATE TABLE tasks (
     description TEXT,
     completed BOOLEAN DEFAULT FALSE
 );
+
+-- Tambahan ---
+ALTER TABLE tasks ADD COLUMN start_date DATE;
+ALTER TABLE tasks ADD COLUMN end_date DATE;
+ALTER TABLE tasks ADD COLUMN pca VARCHAR(100);

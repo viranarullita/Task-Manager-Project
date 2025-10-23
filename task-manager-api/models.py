@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text
+from sqlalchemy import Column, Integer, String, Boolean, Text, Date
 from database import Base
 
 class Task(Base):
@@ -8,3 +8,8 @@ class Task(Base):
     title = Column(String(255), nullable=False)
     description = Column(Text)
     completed = Column(Boolean, default=False)
+
+    # kolom tambahan
+    start_date = Column(Date)
+    end_date = Column(Date)
+    pca = Column(String(100))

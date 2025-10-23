@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useTasks } from "../context/TaskContext";
-import { Save, CheckCircle2, XCircle } from "lucide-react";
+import { Save, CheckCircle2, XCircle, Calendar, User } from "lucide-react";
 
 export default function TaskForm() {
   const { addTask } = useTasks();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [pca, setPca] = useState("");
   const [message, setMessage] = useState<{ text: string; type: "error" | "success" | "" }>({
     text: "",
     type: "",
@@ -13,16 +16,37 @@ export default function TaskForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!title.trim()) {
       setMessage({ text: "Judul tugas wajib diisi!", type: "error" });
       return;
     }
+    if (!startDate.trim()) {
+      setMessage({ text: "Tanggal mulai wajib diisi!", type: "error" });
+      return;
+    }
+    if (!endDate.trim()) {
+      setMessage({ text: "Tanggal selesai wajib diisi!", type: "error" });
+      return;
+    }
+    if (!pca.trim()) {
+      setMessage({ text: "Nama PCA wajib diisi!", type: "error" });
+      return;
+    }
+
+    if (new Date(endDate) < new Date(startDate)) {
+      setMessage({ text: "Tanggal selesai tidak boleh sebelum tanggal mulai!", type: "error" });
+      return;
+    }
 
     try {
-      await addTask(title, description);
+      await addTask(title, description, startDate, endDate, pca);
       setMessage({ text: "Tugas berhasil disimpan!", type: "success" });
       setTitle("");
       setDescription("");
+      setStartDate("");
+      setEndDate("");
+      setPca("");
       setTimeout(() => setMessage({ text: "", type: "" }), 2000);
     } catch {
       setMessage({ text: "Gagal menyimpan tugas.", type: "error" });
@@ -69,6 +93,54 @@ export default function TaskForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block font-medium mb-2 text-slate-700 text-sm md:text-base">
+            Tanggal Mulai <span className="text-rose-500">*</span>
+          </label>
+          <div className="flex items-center gap-2">
+            <Calendar size={16} />
+            <input
+              type="date"
+              className="w-full border border-slate-300 p-2.5 md:p-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block font-medium mb-2 text-slate-700 text-sm md:text-base">
+            Tanggal Selesai <span className="text-rose-500">*</span>
+          </label>
+          <div className="flex items-center gap-2">
+            <Calendar size={16} />
+            <input
+              type="date"
+              className="w-full border border-slate-300 p-2.5 md:p-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="block font-medium mb-2 text-slate-700 text-sm md:text-base">
+          PCA <span className="text-rose-500">*</span>
+        </label>
+        <div className="flex items-center gap-2">
+          <User size={16} />
+          <input
+            type="text"
+            className="w-full border border-slate-300 p-2.5 md:p-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none transition-all duration-200 hover:shadow-sm placeholder:text-slate-400"
+            placeholder="Masukkan nama PCA..."
+            value={pca}
+            onChange={(e) => setPca(e.target.value)}
+          />
+        </div>
       </div>
 
       <button

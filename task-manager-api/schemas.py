@@ -1,9 +1,13 @@
 from pydantic import BaseModel
 from typing import Optional
+from datetime import date
 
 class TaskBase(BaseModel):
     title: str
     description: Optional[str] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    pca: Optional[str] = None
 
 class TaskCreate(TaskBase):
     pass

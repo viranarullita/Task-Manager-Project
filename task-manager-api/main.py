@@ -26,7 +26,13 @@ def get_tasks(db: Session = Depends(get_db)):
 
 @app.post("/tasks", response_model=schemas.TaskOut)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
-    db_task = models.Task(title=task.title, description=task.description)
+    db_task = models.Task(
+        title=task.title,
+        description=task.description,
+        start_date=task.start_date,
+        end_date=task.end_date,
+        pca=task.pca
+    )
     db.add(db_task)
     db.commit()
     db.refresh(db_task)

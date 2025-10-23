@@ -15,11 +15,28 @@ export default function PdfButton() {
     let y = 40;
     tasks.forEach((t, i) => {
       doc.text(`${i + 1}. ${t.title} (${t.completed ? "Selesai" : "Belum"})`, 10, y);
+
+      if (t.start_date) {
+        doc.text(`   Start: ${t.start_date}`, 10, y + 10);
+        y += 10;
+      }
+      if (t.end_date) {
+        doc.text(`   End: ${t.end_date}`, 10, y + 10);
+        y += 10;
+      }
+      if (t.pca) {
+        doc.text(`   PCA: ${t.pca}`, 10, y + 10);
+        y += 10;
+      }
       if (t.description) {
         doc.text(`   - ${t.description}`, 10, y + 10);
         y += 20;
       } else {
         y += 10;
+      }
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
       }
     });
 

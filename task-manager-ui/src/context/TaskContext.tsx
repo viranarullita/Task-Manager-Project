@@ -6,12 +6,21 @@ export interface Task {
   title: string;
   description?: string;
   completed: boolean;
+  start_date?: string;
+  end_date?: string;
+  pca?: string;
 }
 
 interface TaskContextType {
   tasks: Task[];
   fetchTasks: () => void;
-  addTask: (title: string, description?: string) => void;
+  addTask: (
+    title: string,
+    description?: string,
+    start_date?: string,
+    end_date?: string,
+    pca?: string
+  ) => void;
   toggleTask: (id: number) => void;
   updateTask: (id: number, title: string, description?: string) => void;
   deleteTask: (id: number) => void;
@@ -34,12 +43,23 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addTask = async (title: string, description?: string) => {
+  const addTask = async (
+    title: string,
+    description?: string,
+    start_date?: string,
+    end_date?: string,
+    pca?: string
+  ) => {
+    if (!title || !start_date || !end_date || !pca) {
+      console.error("Semua field wajib diisi sebelum menambah tugas!");
+      return;
+    }
+
     try {
       await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description }),
+        body: JSON.stringify({ title, description, start_date, end_date, pca }),
       });
       await fetchTasks();
     } catch (err) {
